@@ -1,0 +1,5 @@
+C:\Users\q\Documents\GitHub\camp-project1\Tab1\app\src\main -> AndroidManifest.xml
+C:\Users\q\Documents\GitHub\camp-project1\Tab1\app\src\main\java\com\example\tab1 -> MainActicity.java
+
+C:\Users\q\Documents\GitHub\camp-project1\Tab1\app\src\main\res\layout -> activity_main.xml, text.xml
+C:\Users\q\Documents\GitHub\camp-project1\Tab1\app\src\main\res\values -> strings.xml
