@@ -6,3 +6,4 @@
 # android studio 연락처 가져오기: https://lamlic36.tistory.com/4
 # 이미지 가져오기: https://straight-strange.tistory.com/24
 # Layout Editor로 UI 빌드: https://developer.android.com/studio/write/layout-editor?hl=ko
+# 권한 요청하기 예시: https://satisfactoryplace.tistory.com/5
