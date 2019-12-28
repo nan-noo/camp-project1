@@ -51,10 +51,10 @@ class MainActivity : AppCompatActivity() {
             img             // 데이터
         )
 
-        val gv = findViewById(R.id.gridView1) as GridView
+        val gv = findViewById<GridView>(R.id.gridView1)
         gv.adapter = adapter  // 커스텀 아답타를 GridView 에 적용
 
-        val tv = findViewById(R.id.textView1) as TextView
+        val tv = findViewById<TextView>(R.id.textView1)
 
         // GridView 아이템을 클릭하면 상단 텍스트뷰에 position 출력
         // JAVA8 에 등장한 lambda expression 으로 구현했습니다. 코드가 많이 간결해지네요
