@@ -2,8 +2,11 @@ package com.example.basictabkt
 
 import com.example.basictabkt.R
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -175,31 +178,46 @@ class Tab1Fragment : Fragment() {
 
         mAdapter!!.itemLongClick = object: CustomAdapter.ItemLongClick {
             override fun onLongClick(view: View, position: Int) {
-                //context(activityInstance), activityInstance!!, activityInstance!!.applicationContext, context!!, context!!.applicationContext, contextWrapper.baseContext, contextWrapper.baseContext.applicationContext
-                val mContext = contextWrapper.baseContext.applicationContext
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("연락처 삭제")
+                builder.setMessage("정말 삭제하시겠습니까?")
+                val dialog_listener = object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        when (which) {
+                            DialogInterface.BUTTON_POSITIVE ->
+                            {
+                                //context(activityInstance), activityInstance!!, activityInstance!!.applicationContext, context!!, context!!.applicationContext, contextWrapper.baseContext, contextWrapper.baseContext.applicationContext
+                                val mContext = contextWrapper.baseContext.applicationContext
 //                val deletedrow1 = mContext.contentResolver.delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + " = " + mArrayList!![position].person_id, null)
 //                val deletedrow2 = mContext.contentResolver.delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + " = " + mArrayList!![position].real_id, null)
 //                val deletedrow3 = mContext.contentResolver.delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts.CONTACT_ID + " = " + position, null)
 //                mAdapter = CustomAdapter(contactList, context!!)
-                val cur = mContext.contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null)
-                var count = 0
-                if (cur!!.moveToFirst()) {
-                    do {
-                        if (position == count) {
-                            val lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY))
-                            val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey)
-                            mContext.contentResolver.delete(uri, null, null)
-                            mArrayList = contactList
-                            val longClick = mAdapter!!.itemLongClick
-                            mAdapter = CustomAdapter(contactList, context!!)
-                            mAdapter!!.itemLongClick = longClick
-                            mRecyclerView.adapter = mAdapter
-                            break
+                                val cur = mContext.contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null)
+                                var count = 0
+                                if (cur!!.moveToFirst()) {
+                                    do {
+                                        if (position == count) {
+                                            val lookupKey = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY))
+                                            val uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_LOOKUP_URI, lookupKey)
+                                            mContext.contentResolver.delete(uri, null, null)
+                                            mArrayList = contactList
+                                            val longClick = mAdapter!!.itemLongClick
+                                            mAdapter = CustomAdapter(contactList, context!!)
+                                            mAdapter!!.itemLongClick = longClick
+                                            mRecyclerView.adapter = mAdapter
+                                            break
+                                        }
+                                        count++
+                                    } while (cur.moveToNext())
+                                }
+                                Log.d("Longclick", "Longclick" + position)
+                            }
                         }
-                        count++
-                    } while (cur.moveToNext())
+                    }
                 }
-                Log.d("Longclick", "Longclick" + position)
+                builder.setPositiveButton("확인", dialog_listener)
+                builder.setNegativeButton("취소", dialog_listener)
+                builder.show()
             }
         }
         mRecyclerView.adapter = mAdapter
